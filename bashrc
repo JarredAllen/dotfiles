@@ -167,6 +167,11 @@ if [ -d "/opt/julia/usr/bin" ]; then
     export PATH="$PATH:/opt/julia/usr/bin"
 fi
 
+# Add homebrew to the path, if it exists
+if [ -d "/opt/homebrew" ]; then
+    export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin"
+fi
+
 # Print a calendar and cowsay a fortune on opening a terminal
 fortune | cowsay
 cal
