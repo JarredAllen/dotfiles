@@ -4,6 +4,11 @@ HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
 
 HERE=$(dirname "$0")
 
+CP_ARGS="-vu"
+if [ "Darwin" = "$(uname -s)" ]; then
+    CP_ARGS="-v"
+fi
+
 # Copy dotfiles from here to the home directory
 if [ -n "$1" ]; then
     HOME="$1"
@@ -11,7 +16,7 @@ fi
 echo "Deploying to $HOME..."
 
 for file in $HOME_DOTFILES; do
-    cp -uv "$HERE/$file" "$HOME/.$file"
+    cp $CP_ARGS "$HERE/$file" "$HOME/.$file"
 done
 
 # Set up vim to work as desired
