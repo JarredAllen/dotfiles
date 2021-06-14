@@ -72,6 +72,9 @@ xterm*|rxvt*)
     ;;
 esac
 
+# Set the default editor to Vim
+export EDITOR="vim"
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -174,6 +177,8 @@ fi
 # Add homebrew to the path, if it exists
 if [ -d "/opt/homebrew" ]; then
     export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin"
+    # If we have LLVM installed through homebrew, put it in front
+    export PATH="/opt/homebrew/opt/llvm/bin/:$PATH"
 fi
 
 # Print a calendar and cowsay a fortune on opening a terminal
