@@ -32,4 +32,5 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 vim -S <(cat <<EOF
 PlugInstall
 VundleInstall
-EOF)
+EOF
+)
