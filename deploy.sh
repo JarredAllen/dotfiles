@@ -29,8 +29,8 @@ fi
 # Set up plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Use Vundle and Plug to install plugins
-vim -S <(cat <<EOF
+(sleep 10; echo ':q') | vim -S <(cat <<EOF
 PlugInstall
 VundleInstall
 EOF
-)
+) 2> /dev/null
