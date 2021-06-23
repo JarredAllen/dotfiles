@@ -28,6 +28,9 @@ Plugin 'tpope/vim-surround'
 " Vim Repeat (idk what it does, but it ain't broke, so I'm not fixing it)
 Plugin 'tpope/vim-repeat'
 
+" Vim Autoformat (automatically format files properly on write)
+Plugin 'Chiel92/vim-autoformat'
+
 " You Complete Me (old autocompletion I used to use)
 " Plugin 'ycm-core/YouCompleteMe'
 
@@ -49,6 +52,14 @@ let g:latex_to_unicode_auto = 1
 
 call plug#end()
 filetype plugin on
+
+" Automatically format files on write, but don't autoindent as fallback
+" (vim autoindent can be weird if an unknown filetype is used).
+" It will still retab and remove trailing whitespace for unknown files.
+"
+" To autoindent a file, type `gg=G` in normal mode
+let g:autoformat_autoindent = 0
+au BufWrite * :Autoformat
 
 " Configuration options for coc.nvim
 set hidden
@@ -165,8 +176,8 @@ set tabstop=4
 set expandtab
 
 " Options suggested in /etc/vim/vimrc
-set showmatch		" Show matching brackets.
-set autowrite		" Automatically save before commands like :next and :make
+set showmatch       " Show matching brackets.
+set autowrite       " Automatically save before commands like :next and :make
 
 " Show line number on current line and relative line numbers on all other
 " lines
