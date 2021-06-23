@@ -31,27 +31,18 @@ Plugin 'tpope/vim-repeat'
 " Vim Autoformat (automatically format files properly on write)
 Plugin 'Chiel92/vim-autoformat'
 
-" You Complete Me (old autocompletion I used to use)
-" Plugin 'ycm-core/YouCompleteMe'
-
-" Finishing up Vundle
-call vundle#end()
-
-call plug#begin()
-" vim-plug plugins
-
-" coc.nvim (autocompletion with Language Server Protocol)
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 " JuliaEditorSupport plugin (do nice things with Julia)
-Plug 'JuliaEditorSupport/julia-vim'
+Plugin 'JuliaEditorSupport/julia-vim'
 " Disable tab replacement of latex unicode specifiers (it breaks coc.nvim autocomplete)
 let g:latex_to_unicode_tab = 0
 " Enable autoreplacement of latex unicode specifiers
 let g:latex_to_unicode_auto = 1
 
-call plug#end()
-filetype plugin on
+" coc.nvim (autocompletion with Language Server Protocol)
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Finishing up Vundle
+call vundle#end()
 
 " Automatically format files on write, but don't autoindent as fallback
 " (vim autoindent can be weird if an unknown filetype is used).
