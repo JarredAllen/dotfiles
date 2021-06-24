@@ -1,6 +1,7 @@
 #!/bin/bash
 
 HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
+HOME_CONFIG_DIRS="git"
 
 HERE=$(dirname "$0")
 
@@ -19,6 +20,10 @@ echo "Deploying to $HOME..."
 # Copy dotfiles from here to the home directory
 for file in $HOME_DOTFILES; do
     cp $CP_ARGS "$HERE/$file" "$HOME/.$file"
+done
+# Copy .config subdirs recursively to the home directory
+for dir in $HOME_CONFIG_DIRS; do
+    cp $CP_ARGS -R "$HERE/$dir" "$HOME/.config/"
 done
 
 # Set up vim to work as desired
