@@ -21,6 +21,9 @@ calc() {
 alias python=python3
 
 # A function for manipulating aliases programmatically
+# If two arguments are provided, alias the first argument to the second one. If a third is supplied,
+# add that as a comment explaining the alias. Otherwise, open this alias file in vim.
+# Either way, apply the aliases in this file after making changes.
 aliases() {
     if [ -n "$2" ]; then
         echo "" >> ~/.bash_aliases
@@ -31,8 +34,9 @@ aliases() {
     else
         vim ~/.bash_aliases
     fi
-    source ~/.bash_aliases
+    realias
 }
+alias realias="source ~/.bash_aliases"
 
 alias :q='echo "You are not in vim, you modron."'
 alias :wq='echo "You are not in vim, you modron."'
@@ -122,3 +126,6 @@ _junit_completion() {
     done
 }
 complete -F _junit_completion junit
+
+# Go back
+alias back="cd ~-/"
