@@ -180,6 +180,10 @@ set relativenumber
 " Useful for always being able to see the context of the cursor location
 set scrolloff=2
 
+" Remember the position in the document when this file was last opened, and jump there
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 " Assign :W to be the same as :w (and :Wq as :wq), because I make that typo a lot
 command W w
