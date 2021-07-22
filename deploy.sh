@@ -25,6 +25,9 @@ done
 for dir in $HOME_CONFIG_DIRS; do
     cp $CP_ARGS -R "$HERE/$dir" "$HOME/.config/"
 done
+# Set some global git configuration variables
+GIT_CONFIG=$'pull.ff only\nuser.name "Jarred Allen"\ncore.excludesfile ~/.config/git/ignore'
+bash <(while IFS=$'\n' read -r option; do echo "git config --file \"$HOME/.gitconfig\" --replace-all $option"; done <<< "$GIT_CONFIG")
 
 # Set up vim to work as desired
 # Set up vundle
