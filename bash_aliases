@@ -1,3 +1,5 @@
+# An alias for quickly moving up directories
+# Run `..` to move up a directory, or `.. <N>` to move up N directories
 ..() {
     cd $(for ((c=0; c<${1:-1}; ++c)); do echo -n ../; done)
 }
@@ -18,12 +20,13 @@ calc() {
     fi
 }
 
+# Default to python3 in the shell, regardless of system configuration
 alias python=python3
 
 # A function for manipulating aliases programmatically
 # If two arguments are provided, alias the first argument to the second one. If a third is supplied,
 # add that as a comment explaining the alias. Otherwise, open this alias file in vim.
-# Either way, apply the aliases in this file after making changes.
+# Either way, reapply the aliases in this file after making changes.
 aliases() {
     if [ -n "$2" ]; then
         echo "" >> ~/.bash_aliases
@@ -36,20 +39,24 @@ aliases() {
     fi
     realias
 }
+# Reapply the aliases in this file
 alias realias="source ~/.bash_aliases"
 
+# Reminders because this happens sometimes
 alias :q='echo "You are not in vim, you modron."'
 alias :wq='echo "You are not in vim, you modron."'
 
+# Make a new directory and move into that directory
 mkcd() { mkdir -p "$1" && cd "$1"; }
 
+# List the network interfaces and ips (TODO looks ugly if interfaces don't all have ip addresses)
 ips() {
-    ifconfig | awk '{ if ($1 == "inet"){ print $2 }; if (/^[^ \t]/){printf "%s ",$1} }'
+    ifconfig | awk '{ if ($1 == "inet" || $1 == "inet6"){ print $2 }; if (/^[^ \t]/){printf "%s ",$1} }'
 }
 
+# Aliases for docker containers used in classes
 alias cs70='docker run -v "$(pwd):/home/student/cs70/" -it harveymudd/cs70-student:fall2019 /bin/zsh'
 alias cs70-update='docker pull harveymudd/cs70-student:fall2019'
-
 alias pls='docker run -v "$(pwd):/root/lab" -v "/home/jarred/.vimrc:/root/.vimrc" -v "/home/jarred/.vim:/root/.vim" -it harveymudd/cs131 /bin/zsh'
 alias pls-update='docker pull harveymudd/cs131'
 
@@ -99,7 +106,7 @@ sc() {
     echo "Please report this bug to Jarred Allen <jarredallen73@gmail.com>"
 }
 
-# Output files and filenames
+# Like cat, but also outputs the filenames
 alias cn='tail -vn +1'
 
 # Make filenames lower-case
@@ -113,7 +120,7 @@ lcname() {
     fi
 }
 
-# Run junit more easily
+# Run junit more easily (this is the location junit is installed on my laptop, may be different elsewhere)
 junit() {
     java -cp ".:/usr/share/java/junit-3.8.2.jar" junit.textui.TestRunner "$1"
 }
@@ -127,5 +134,5 @@ _junit_completion() {
 }
 complete -F _junit_completion junit
 
-# Go back
+# Go back to the previous directory (only tested on bash)
 alias back="cd ~-/"

@@ -8,8 +8,10 @@ case $- in
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
+# Don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
+# Useful if inputting a command which includes a password, preceed with a space to avoid letting
+# the password show up in your history.
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
@@ -56,6 +58,11 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# Use my preferred prompt (with colors if the terminal supports it):
+# user@host:dir
+# [#] HH:MM$ 
+# I like this prompt because command begins at a consistent location regardless of path length and
+# short commands are never broken across lines
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n[\#] \[\033[01;32m\]\A\[\033[00m\]\$ '
 else
@@ -75,7 +82,7 @@ esac
 # Set the default editor to Vim
 export EDITOR="vim"
 
-# enable color support of ls and also add handy aliases
+# Use aliases to enable color support for grep and ls, if the terminal supports it
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
@@ -91,23 +98,15 @@ else
     fi
 fi
 
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -alF'
+# Use `la` as an alias for `ls -A`, to display hidden folders (excluding . and ..)
 alias la='ls -A'
-alias l='ls -CF'
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
+# If doing a long-running command, use `alert` to send a notification when the command finishes
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
+# Placing aliases in a separate file enables sourcing that separate file to just refresh aliases
+# without doing potentially non-idempotent operations here
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -123,10 +122,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Allow for editing partially-typed commands in vi
+# Use vim-like keybinds when inputting commands
 set -o vi
 
-# Improved tab behavior
+# Improved tab behavior (if an ambiguous tab is done, cycle between options and show them on screen)
 bind 'TAB:menu-complete'
 bind 'set show-all-if-ambiguous on'
 
@@ -160,7 +159,8 @@ else
         start_agent;
 fi
 
-[ -f "/home/jarred/.ghcup/env" ] && source "/home/jarred/.ghcup/env" # ghcup-env
+# Source ghcup-env if installed
+[ -f "/home/jarred/.ghcup/env" ] && source "/home/jarred/.ghcup/env"
 
 # Add DEVKITPRO environment variables for tonc if it exists
 if [ -d "/opt/devkitpro" ]; then

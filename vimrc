@@ -1,7 +1,6 @@
 "
 " A vimrc file which sets reasonable defaults and other things that I like
 " Written by: Jarred Allen
-"
 
 " Disable some VI-compatibility features
 set nocompatible
@@ -15,8 +14,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " Vundle plugins
-" Having Vundle and vim-plug are probably redundant, but I'm too lazy to fix
-" this.
 
 " Local vimrc (have vimrc commands for a specific directory tree)
 Plugin 'LucHermitte/lh-vim-lib'
@@ -33,10 +30,11 @@ Plugin 'Chiel92/vim-autoformat'
 
 " JuliaEditorSupport plugin (do nice things with Julia)
 Plugin 'JuliaEditorSupport/julia-vim'
-" Disable tab replacement of latex unicode specifiers (it breaks coc.nvim autocomplete)
-let g:latex_to_unicode_tab = 0
 " Enable autoreplacement of latex unicode specifiers
 let g:latex_to_unicode_auto = 1
+" Disable tab replacement of latex unicode specifiers (it breaks coc.nvim autocomplete)
+" This is the default for Julia editors, but doesn't work here (see above for how)
+let g:latex_to_unicode_tab = 0
 
 " coc.nvim (autocompletion with Language Server Protocol)
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
@@ -44,11 +42,7 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 " Finishing up Vundle
 call vundle#end()
 
-" Automatically format files on write, but don't autoindent as fallback
-" (vim autoindent can be weird if an unknown filetype is used).
-" It will still retab and remove trailing whitespace for unknown files.
-"
-" To autoindent a file, type `gg=G` in normal mode
+" Automatically format files on write, but only for known filetypes
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
@@ -189,13 +183,14 @@ endif
 command W w
 command Wq wq
 
-" Assign :WS to writing with sudo
+" Assign :WS to writing with sudo (in case you edit a root file on accident)
 command WS w !sudo tee %
 
 " Better folding behavior by default
 autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
 autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
+" Run command `:DiffSaved` to compare the current buffer to how it exists on disk
 function! s:DiffWithSaved()
   let filetype=&ft
   diffthis
