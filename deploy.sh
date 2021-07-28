@@ -5,6 +5,36 @@ HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
 # Directories in my home's .config directory
 HOME_CONFIG_DIRS="git"
 
+Usage() {
+    echo 'Usage:'
+    echo './deploy.sh [home]'
+    echo
+    echo 'Arguments:'
+    echo '[home]: The directory to deploy files to [default: your home directory]'
+}
+
+TARGET=
+while (( "$#" )); do
+    case "$1" in
+        -h|--help) # Help message
+            Usage
+            exit 0
+        ;;
+        -*|--*) # Unsupported flags
+            1>&2 echo "Error: Unsupported flag: $1"
+            exit 1
+        ;;
+        *) # One positional argument for home, more are invalid
+            if [ "$TARGET" = "" ]; then
+                TARGET="$1"
+            else
+                1>&2 echo 'Error: Too many positional args'
+                exit 1
+            fi
+        ;;
+    esac
+done
+
 # Make $HERE refer to the directory of this script, so it will still work if run from another directory
 HERE=$(dirname "$0")
 
@@ -16,22 +46,22 @@ fi
 
 # Allow the target directory to be changed from default if desired
 # (defaults to user's home directory)
-if [ -n "$1" ]; then
-    HOME="$1"
+if [ -z "$TARGET" ]; then
+    TARGET="$HOME"
 fi
-echo "Deploying to $HOME..."
+echo "Deploying to $TARGET..."
 # Copy dotfiles from here to the home directory
 for file in $HOME_DOTFILES; do
-    cp $CP_ARGS "$HERE/$file" "$HOME/.$file"
+    cp $CP_ARGS "$HERE/$file" "$TARGET/.$file"
 done
 # Copy .config subdirs recursively to the home directory
 for dir in $HOME_CONFIG_DIRS; do
-    cp $CP_ARGS -R "$HERE/$dir" "$HOME/.config/"
+    cp $CP_ARGS -R "$HERE/$dir" "$TARGET/.config/"
 done
 # Set some global git configuration variables
 # TODO Figure out how to arrange these variables in a more easily readable/editable manner
 GIT_CONFIG=$'pull.ff only\nuser.name "Jarred Allen"\ncore.excludesfile ~/.config/git/ignore'
-bash <(while IFS=$'\n' read -r option; do echo "git config --file \"$HOME/.gitconfig\" --replace-all $option"; done <<< "$GIT_CONFIG")
+bash <(while IFS=$'\n' read -r option; do echo "git config --file \"$TARGET/.gitconfig\" --replace-all $option"; done <<< "$GIT_CONFIG")
 
 # Set up vim to work as desired
 # Set up vundle
