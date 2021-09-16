@@ -42,7 +42,14 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 " Finishing up Vundle
 call vundle#end()
 
-" Automatically format files on write, but only for known filetypes
+" Enable detection of filetype
+filetype plugin on
+
+" When not editing a tex file, the Tex command does nothing (when editing a
+" tex file, definition comes from .vim/after/ftplugin/tex.vim).
+command Tex :
+
+" Automatically format files on write
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0

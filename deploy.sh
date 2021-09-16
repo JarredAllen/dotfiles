@@ -4,6 +4,7 @@
 HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
 # Directories in my home's .config directory
 HOME_CONFIG_DIRS="git"
+HOME_VIM_DIRS="after"
 
 Usage() {
     echo 'Usage:'
@@ -57,6 +58,10 @@ done
 # Copy .config subdirs recursively to the home directory
 for dir in $HOME_CONFIG_DIRS; do
     cp $CP_ARGS -R "$HERE/$dir" "$TARGET/.config/"
+done
+# Copy .vim subdirs recursively to the .vim directory
+for dir in $HOME_VIM_DIRS; do
+    cp $CP_ARGS -R "$HERE/vim/$dir" "$HOME/.vim/"
 done
 # Set some global git configuration variables
 # TODO Figure out how to arrange these variables in a more easily readable/editable manner
