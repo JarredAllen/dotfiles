@@ -76,9 +76,10 @@ if [ -d ~/.vim/bundle/Vundle.vim ]; then
 else
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
-# Use Vundle to install plugins
+# Use Vundle to install plugins, and use CoC to install language servers
 # TODO figure out how to wait until it finishes, instead of having a fixed 20-second timer
 (sleep 20; echo ':q') | vim -S <(cat <<EOF
 PluginInstall!
+CocInstall coc-clangd coc-json coc-julia coc-python coc-rust-analyzer
 EOF
 ) 2> /dev/null
