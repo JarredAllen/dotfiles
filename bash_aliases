@@ -136,3 +136,20 @@ complete -F _junit_completion junit
 
 # Go back to the previous directory (only tested on bash)
 alias back="cd ~-/"
+
+# Open a math pset by making it in pdflatex, opening the pdf in evince, then opening the tex file in vim
+mpset() {
+    if [ -z "$1" ]; then
+        echo "No file specified"
+        return 1
+    fi
+    if [ ! -f "$1.tex" ]; then
+        echo "Can't find file: \"$1.tex\""
+        return 1
+    fi
+    pdflatex "$1.tex"
+    evince "$1.pdf" &> /dev/null &
+    PDF_VIEWER_PID=$!
+    vim "$1.tex"
+    kill "$PDF_VIEWER_PID"
+}
