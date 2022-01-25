@@ -2,6 +2,9 @@
 " A vimrc file which sets reasonable defaults and other things that I like
 " Written by: Jarred Allen
 
+" I like this color scheme
+colorscheme slate
+
 " Disable some VI-compatibility features
 set nocompatible
 
@@ -13,7 +16,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
-" Vundle plugins
+" Vim plugins
 
 " Local vimrc (have vimrc commands for a specific directory tree)
 Plugin 'LucHermitte/lh-vim-lib'
@@ -39,6 +42,12 @@ let g:latex_to_unicode_tab = 0
 " coc.nvim (autocompletion with Language Server Protocol)
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Plugins to integrate better with git
+" Git commands from within Vim
+Plugin 'tpope/vim-fugitive'
+" Diffs in the sidebar
+Plugin 'airblade/vim-gitgutter'
+
 " Finishing up Vundle
 call vundle#end()
 
@@ -61,7 +70,6 @@ set nobackup
 set nowritebackup
 set updatetime=300 " in ms. Longer time = slower user experience
 set shortmess+=c
-set signcolumn=number " One column for errors and line numbers. Also keeps column present always
 " Use tabs to autocomplete code
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -221,5 +229,7 @@ nnoremap Q @@
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
-" I like this color scheme
-colorscheme slate
+" Set colors in the sign bar:
+highlight SignColumn ctermbg=NONE
+highlight GitGutterAdd ctermfg=green ctermbg=NONE
+highlight GitGutterChange ctermfg=magenta ctermbg=NONE
