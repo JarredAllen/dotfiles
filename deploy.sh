@@ -80,6 +80,6 @@ fi
 # TODO figure out how to wait until it finishes, instead of having a fixed 20-second timer
 (sleep 20; echo ':q') | vim -S <(cat <<EOF
 PluginInstall!
-CocInstall coc-clangd coc-json coc-julia coc-python coc-rust-analyzer
+CocInstall coc-clangd coc-json coc-julia coc-python coc-rust-analyzer coc-hls
 EOF
 ) 2> /dev/null
