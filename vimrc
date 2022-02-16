@@ -28,6 +28,9 @@ Plugin 'tpope/vim-surround'
 " Vim Repeat (idk what it does, but it ain't broke, so I'm not fixing it)
 Plugin 'tpope/vim-repeat'
 
+" VimTeX (better functionality for editing latex in vim
+Plugin 'lervag/vimtex'
+
 " Vim Autoformat (automatically format files properly on write)
 Plugin 'Chiel92/vim-autoformat'
 
