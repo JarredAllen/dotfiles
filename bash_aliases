@@ -1,7 +1,13 @@
+#!/bin/bash
+
+# Aliases and shell functions for various useful utilities
+
 # An alias for quickly moving up directories
 # Run `..` to move up a directory, or `.. <N>` to move up N directories
 ..() {
-    cd $(for ((c=0; c<${1:-1}; ++c)); do echo -n ../; done)
+    # shellcheck disable=SC2164
+    # we can ignore this issue (`cd` without `|| return`) because cd is the last
+    cd "$(for ((c=0; c<${1:-1}; ++c)); do echo -n ../; done)"
 }
 
 # A calculator command. Run with an argument to calculate that argument,
@@ -37,7 +43,7 @@ aliases() {
     else
         vim ~/.bash_aliases
     fi
-    realias
+    source ~/.bash_aliases
 }
 # Reapply the aliases in this file
 alias realias="source ~/.bash_aliases"
@@ -47,7 +53,11 @@ alias :q='echo "You are not in vim, you modron."'
 alias :wq='echo "You are not in vim, you modron."'
 
 # Make a new directory and move into that directory
-mkcd() { mkdir -p "$1" && cd "$1"; }
+mkcd() {
+    # shellcheck disable=SC2164
+    # we can ignore this issue (`cd` without `|| return`) because cd is the last
+    mkdir -p "$1" && cd "$1";
+}
 
 # List the network interfaces and ips (TODO looks ugly if interfaces don't all have ip addresses)
 ips() {
@@ -59,17 +69,37 @@ alias cs70='docker run -v "$(pwd):/home/student/cs70/" -it harveymudd/cs70-stude
 alias cs70-update='docker pull harveymudd/cs70-student:fall2019'
 alias pls='docker run -v "$(pwd):/root/lab" -v "/home/jarred/.vimrc:/root/.vimrc" -v "/home/jarred/.vim:/root/.vim" -it harveymudd/cs131 /bin/zsh'
 alias pls-update='docker pull harveymudd/cs131'
+alias cs132='docker run -v "$(pwd):/root/lab" -v "/home/jarred/.vimrc:/root/.vimrc" -v "/home/jarred/.vim:/root/.vim" -v "/usr/local/bin/node:/usr/bin/node" -it harveymudd/cs132:2 /bin/zsh'
+alias cs132-update='docker pull harveymudd/cs132:2'
 
 # A utility for making and moving to shortcuts in the terminal
 sc() {
     if [ "$1" == "-p" ]; then
         echo "Existing shortcuts:"
-        for i in $(ls ~/.sc_shortcuts); do
-            echo "$(printf "%12s" "$i"): $(cat ~/.sc_shortcuts/"$i")"
+        for i in ~/.sc_shortcuts/*; do
+            echo "$(printf "%12s" "$(basename "$i")"): $(cat "$i")"
         done
         return
     fi
-    if [ -z "$1" -o "$1" == "-h" -o "$1" == "--help" ]; then
+    if [ "$1" == "--check" ]; then
+        echo "Dead links:"
+        for i in ~/.sc_shortcuts/*; do
+            target="$(cat "$i")"
+            if [ ! -d "$target" ]; then
+                echo "$(printf "%12s" "$i"): $target"
+            fi
+        done
+        return
+    fi
+    if [ "$1" == "-d" ] || [ "$1" == "--delete" ]; then
+        if [ -z "$2" ]; then
+            echo 'No shortcut given to remove'
+            return
+        fi
+        rm "$HOME/.sc_shortcuts/$2"
+        return
+    fi
+    if [ -z "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         if [ -z "$1" ]; then
             echo $'No arguments given'
         fi
@@ -78,8 +108,12 @@ sc() {
         echo $'\t\tCreate a new shortcut'
         echo $'\tsc [name]'
         echo $'\t\tGo to the given shortcut'
+        echo $'\tsc -d|--delete [name]'
+        echo $'\t\tRemove the specified shortcut'
         echo $'\tsc -p'
         echo $'\t\tList the existing shortcuts'
+        echo $'\tsc --check'
+        echo $'\t\tList any dead links'
         echo $'\tsc -h|--help'
         echo $'\t\tList this help'
         return
@@ -90,17 +124,18 @@ sc() {
             return
         fi
         echo "Making $1 point to $2"
-        printf "%s" $2 > ~/.sc_shortcuts/"$1"
+        printf "%s" "$2" > ~/.sc_shortcuts/"$1"
         return
     fi
     if [ -n "$1" ]; then
         if [ -f ~/.sc_shortcuts/"$1" ]; then
             echo "Moving to shortcut $1"
-            cd $(cat ~/.sc_shortcuts/"$1")
+            cd "$(cat ~/.sc_shortcuts/"$1")"
+            return
         else
             echo "No such shortcut: $1"
+            return
         fi
-        return
     fi
     echo "This line shouldn't be reached."
     echo "Please report this bug to Jarred Allen <jarredallen73@gmail.com>"
@@ -115,7 +150,7 @@ lcname() {
         echo "Please list the files to make lower case"
     else
         for arg in "$@"; do
-            mv "$arg" $(echo "$arg" | awk '{print tolower($0)}')
+            mv "$arg" "$(echo "$arg" | awk '{print tolower($0)}')"
         done
     fi
 }
@@ -125,8 +160,6 @@ junit() {
     java -cp ".:/usr/share/java/junit-3.8.2.jar" junit.textui.TestRunner "$1"
 }
 _junit_completion() {
-    dirname=$(dirname "${COMP_WORDS[COMP_CWORD]}")
-    basename=$(basename "${COMP_WORDS[COMP_CWORD]}")
     mapfile -t COMPREPLY< <(ls . | grep "^${COMP_WORDS[COMP_CWORD]}" | grep "[.]class$")
     for ((i=0; i<${#COMPREPLY[@]}; i++)); do
         COMPREPLY[$i]="${COMPREPLY[$i]%.class}"
