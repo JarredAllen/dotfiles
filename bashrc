@@ -181,6 +181,10 @@ if [ -d "/opt/homebrew" ]; then
     export PATH="/opt/homebrew/opt/llvm/bin/:$PATH"
 fi
 
+# Add z
+# https://github.com/rupa/z
+. ~/bin/z.sh
+
 # Print a calendar and cowsay a fortune on opening a terminal
 fortune | cowsay
 cal

@@ -63,6 +63,11 @@ done
 for dir in $HOME_VIM_DIRS; do
     cp $CP_ARGS -R "$HERE/vim/$dir" "$HOME/.vim/"
 done
+# Copy binaries into ~/bin
+cp $CP_ARGS -R "$HERE/bin" "$HOME/bin"
+# Install z
+curl https://raw.githubusercontent.com/rupa/z/master/z.sh > $HOME/bin/z.sh
+
 # Set some global git configuration variables
 # TODO Figure out how to arrange these variables in a more easily readable/editable manner
 GIT_CONFIG=$'pull.ff only\nuser.name "Jarred Allen"\ncore.excludesfile ~/.config/git/ignore'
