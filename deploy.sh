@@ -70,7 +70,7 @@ curl https://raw.githubusercontent.com/rupa/z/master/z.sh > $HOME/bin/z.sh
 
 # Set some global git configuration variables
 # TODO Figure out how to arrange these variables in a more easily readable/editable manner
-GIT_CONFIG=$'pull.ff only\nuser.name "Jarred Allen"\ncore.excludesfile ~/.config/git/ignore'
+GIT_CONFIG=$'pull.ff only\nuser.name "Jarred Allen"\ncore.excludesfile ~/.config/git/ignore\ndiff.external difft'
 bash <(while IFS=$'\n' read -r option; do echo "git config --file \"$TARGET/.gitconfig\" --replace-all $option"; done <<< "$GIT_CONFIG")
 
 # Set up vim to work as desired
