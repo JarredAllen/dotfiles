@@ -1,10 +1,12 @@
 #!/bin/bash
+set -euo pipefail
 
 # The dotfiles directly in my home to copy out
 HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
 # Directories in my home's .config directory
 HOME_CONFIG_DIRS="git"
 HOME_VIM_DIRS="after"
+CARGO_BINARIES=(bat cargo-outdated cargo-tree difftastic fd-find ripgrep rustfmt sd)
 
 Usage() {
     echo 'Usage:'
@@ -21,7 +23,7 @@ while (( "$#" )); do
             Usage
             exit 0
         ;;
-        -*|--*) # Unsupported flags
+        -*) # Unsupported flags
             1>&2 echo "Error: Unsupported flag: $1"
             exit 1
         ;;
@@ -66,18 +68,27 @@ done
 # Copy binaries into ~/bin
 cp $CP_ARGS -R "$HERE/bin" "$HOME/bin"
 # Install z
-curl https://raw.githubusercontent.com/rupa/z/master/z.sh > $HOME/bin/z.sh
+curl https://raw.githubusercontent.com/rupa/z/master/z.sh > "$HOME/bin/z.sh"
 
 # Set some global git configuration variables
 # TODO Figure out how to arrange these variables in a more easily readable/editable manner
 GIT_CONFIG=$'pull.ff only\nuser.name "Jarred Allen"\ncore.excludesfile ~/.config/git/ignore\ndiff.external difft'
 bash <(while IFS=$'\n' read -r option; do echo "git config --file \"$TARGET/.gitconfig\" --replace-all $option"; done <<< "$GIT_CONFIG")
 
+# If cargo is present, update all files installed through it
+# And then install the ones that I like to use
+if command -v cargo; then
+    cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ' | xargs cargo install
+    cargo install "${CARGO_BINARIES[@]}"
+else
+    echo "Not installing cargo programs because cargo could not be found"
+fi
+
 # Set up vim to work as desired
 # Set up vundle
 if [ -d ~/.vim/bundle/Vundle.vim ]; then
     printf "Updating Vundle: "
-    (cd ~/.vim/bundle/Vundle.vim; git pull)
+    (cd ~/.vim/bundle/Vundle.vim && git pull)
 else
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
