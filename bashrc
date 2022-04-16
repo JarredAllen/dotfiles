@@ -181,6 +181,11 @@ if [ -d "/opt/homebrew" ]; then
     export PATH="/opt/homebrew/opt/llvm/bin/:$PATH"
 fi
 
+# Add PlatformIO to the path, if it exists
+if [ -d "~/.platformio" ]; then
+    export PATH="$PATH:~/.platformio/penv/bin"
+fi
+
 # Add z
 # https://github.com/rupa/z
 . ~/bin/z.sh
