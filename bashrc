@@ -61,8 +61,8 @@ fi
 # Use my preferred prompt (with colors if the terminal supports it):
 # user@host:dir
 # [#] HH:MM$ 
-# I like this prompt because command begins at a consistent location regardless of path length and
-# short commands are never broken across lines
+# I like this prompt because command begins at a consistent location regardless
+# of path length and short commands are never broken across lines
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n[\#] \[\033[01;32m\]\A\[\033[00m\]\$ '
 else
@@ -160,7 +160,9 @@ else
 fi
 
 # Source ghcup-env if installed
-[ -f "/home/jarred/.ghcup/env" ] && source "/home/jarred/.ghcup/env"
+if [ -f "~/.ghcup/env" ]; then
+    source "~/.ghcup/env"
+fi
 
 # Add DEVKITPRO environment variables for tonc if it exists
 if [ -d "/opt/devkitpro" ]; then
@@ -186,7 +188,7 @@ if [ -d "~/.platformio" ]; then
     export PATH="$PATH:~/.platformio/penv/bin"
 fi
 
-# Add z
+# Add z (like cd, but looks at most common directories for you in general)
 # https://github.com/rupa/z
 . ~/bin/z.sh
 
