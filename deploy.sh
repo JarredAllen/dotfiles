@@ -66,7 +66,7 @@ for dir in $HOME_VIM_DIRS; do
     cp $CP_ARGS -R "$HERE/vim/$dir" "$HOME/.vim/"
 done
 # Copy binaries into ~/bin
-cp $CP_ARGS -R "$HERE/bin" "$HOME/bin"
+cp $CP_ARGS -R "$HERE/bin" "$HOME"
 # Install z
 curl https://raw.githubusercontent.com/rupa/z/master/z.sh > "$HOME/bin/z.sh"
 
