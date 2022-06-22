@@ -94,8 +94,16 @@ else
 fi
 # Use Vundle to install plugins, and use CoC to install language servers
 # TODO figure out how to wait until it finishes, instead of having a fixed 20-second timer
+# TODO figure out why it fails and fix it, instead of asserting that it didn't
 (sleep 20; echo ':q') | vim -S <(cat <<EOF
 PluginInstall!
 CocInstall coc-clangd coc-json coc-julia coc-python coc-rust-analyzer
 EOF
-) 2> /dev/null
+) 2> /dev/null || true
+# Build coc.nvim so it will work
+echo "Building coc.nvim"
+if (which yarn); then
+    (cd ~/.vim/bundle/coc.nvim && yarn install)
+else
+    echo "No yarn install found"
+fi
