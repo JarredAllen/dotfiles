@@ -4,9 +4,9 @@ set -euo pipefail
 # The dotfiles directly in my home to copy out
 HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
 # Directories in my home's .config directory
-HOME_CONFIG_DIRS="git"
+HOME_CONFIG_ENTRIES="git ripgrep.conf"
 HOME_VIM_DIRS="after"
-CARGO_BINARIES=(bat cargo-outdated cargo-tree difftastic fd-find ripgrep sd)
+CARGO_BINARIES=(bat cargo-outdated cargo-tree cargo-udeps difftastic fd-find ripgrep sd)
 
 Usage() {
     echo 'Usage:'
@@ -58,7 +58,7 @@ for file in $HOME_DOTFILES; do
     cp $CP_ARGS "$HERE/$file" "$TARGET/.$file"
 done
 # Copy .config subdirs recursively to the home directory
-for dir in $HOME_CONFIG_DIRS; do
+for dir in $HOME_CONFIG_ENTRIES; do
     cp $CP_ARGS -R "$HERE/$dir" "$TARGET/.config/"
 done
 # Copy .vim subdirs recursively to the .vim directory
