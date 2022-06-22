@@ -6,7 +6,7 @@ HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
 # Directories in my home's .config directory
 HOME_CONFIG_DIRS="git"
 HOME_VIM_DIRS="after"
-CARGO_BINARIES=(bat cargo-outdated cargo-tree difftastic fd-find ripgrep rustfmt sd)
+CARGO_BINARIES=(bat cargo-outdated cargo-tree difftastic fd-find ripgrep sd)
 
 Usage() {
     echo 'Usage:'

@@ -104,7 +104,9 @@ alias la='ls -A'
 # If doing a long-running command, use `alert` to send a notification when the command finishes
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Alias definitions.
+# Silence deprecation warning on MacOS
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 # Placing aliases in a separate file enables sourcing that separate file to just refresh aliases
 # without doing potentially non-idempotent operations here
 if [ -f ~/.bash_aliases ]; then
@@ -160,8 +162,8 @@ else
 fi
 
 # Source ghcup-env if installed
-if [ -f "~/.ghcup/env" ]; then
-    source "~/.ghcup/env"
+if [ -f "$HOME/.ghcup/env" ]; then
+    source "$HOME/.ghcup/env"
 fi
 
 # Add DEVKITPRO environment variables for tonc if it exists
@@ -184,8 +186,13 @@ if [ -d "/opt/homebrew" ]; then
 fi
 
 # Add PlatformIO to the path, if it exists
-if [ -d "~/.platformio" ]; then
-    export PATH="$PATH:~/.platformio/penv/bin"
+if [ -d "$HOME/.platformio" ]; then
+    export PATH="$PATH:$HOME/.platformio/penv/bin"
+fi
+
+# Add the cargo binary directory, if it exists
+if [ -d "$HOME/.cargo/bin" ]; then
+    export PATH="$PATH:$HOME/.cargo/bin"
 fi
 
 # Add z (like cd, but looks at most common directories for you in general)
