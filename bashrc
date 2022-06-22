@@ -131,17 +131,6 @@ set -o vi
 bind 'TAB:menu-complete'
 bind 'set show-all-if-ambiguous on'
 
-# Add Ruby Gems to the path if it exists
-if [ -d "$HOME/gems" ]; then
-    export GEM_HOME="$HOME/gems"
-    export PATH="$HOME/gems/bin:$PATH"
-fi
-
-# Add yarn to the path if it exists
-if [ -d "$HOME/.yarn" ]; then
-    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-fi
-
 # Configure SSH-Agent to have correct environment variables
 SSH_ENV="$HOME/.ssh/environment"
 function start_agent {
@@ -161,6 +150,30 @@ else
         start_agent;
 fi
 
+# Set a configuration file for ripgrep
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep.conf"
+
+# Check if a directory exists and isn't already in the path
+_dircheck() {
+    [ -d "$1" ] && [[ ! "$PATH" == *"$1"* ]]
+}
+_idempotent_path_add() {
+    if _dircheck "$1"; then
+        export PATH="$PATH:$1"
+    fi
+}
+
+# Add Ruby Gems to the path if it exists
+if [ -d "$HOME/gems" ]; then
+    export GEM_HOME="$HOME/gems"
+    export PATH="$HOME/gems/bin:$PATH"
+fi
+
+# Add yarn to the path if it exists
+if [ -d "$HOME/.yarn" ]; then
+    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fi
+
 # Source ghcup-env if installed
 if [ -f "$HOME/.ghcup/env" ]; then
     source "$HOME/.ghcup/env"
@@ -174,26 +187,20 @@ if [ -d "/opt/devkitpro" ]; then
 fi
 
 # Add Julia tools to the path if it's installed in /opt/julia
-if [ -d "/opt/julia/usr/bin" ]; then
-    export PATH="$PATH:/opt/julia/usr/bin"
-fi
+_idempotent_path_add "/opt/julia/usr/bin" ]
 
 # Add homebrew to the path, if it exists
 if [ -d "/opt/homebrew" ]; then
-    export PATH="$PATH:/opt/homebrew/bin:/opt/homebrew/sbin"
+    _idempotent_path_add "/opt/homebrew/bin:/opt/homebrew/sbin"
     # If we have LLVM installed through homebrew, put it in front
     export PATH="/opt/homebrew/opt/llvm/bin/:$PATH"
 fi
 
 # Add PlatformIO to the path, if it exists
-if [ -d "$HOME/.platformio" ]; then
-    export PATH="$PATH:$HOME/.platformio/penv/bin"
-fi
+_idempotent_path_add "$HOME/.platformio/penv/bin"
 
 # Add the cargo binary directory, if it exists
-if [ -d "$HOME/.cargo/bin" ]; then
-    export PATH="$PATH:$HOME/.cargo/bin"
-fi
+_idempotent_path_add "$HOME/.cargo/bin"
 
 # Add z (like cd, but looks at most common directories for you in general)
 # https://github.com/rupa/z
