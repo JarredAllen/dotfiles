@@ -170,6 +170,16 @@ complete -F _junit_completion junit
 # Go back to the previous directory (only tested on bash)
 alias back="cd ~-/"
 
+# Go to root of the current repository
+repo-root() {
+    REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+    if [ $? -eq 0 ]; then
+        cd "$REPO_ROOT"
+    else
+        echo "Error: not in a repository"
+    fi
+}
+
 # Open a math pset by making it in pdflatex, opening the pdf in evince, then opening the tex file in vim
 mpset() {
     if [ -z "$1" ]; then
@@ -188,4 +198,5 @@ mpset() {
 }
 
 # Run clippy with extra denies
-alias pclippy='cargo clippy --locked --all-targets --all-features -- -D missing_docs -D unused_extern_crates -D warnings -D clippy::unwrap_used -D clippy::expect_used -D clippy::indexing_slicing -D clippy::panic -D clippy::print_stdout -D clippy::await_holding_lock -D clippy::await_holding_refcell_ref -D clippy::use_self -D clippy::cast_possible_wrap -D clippy::missing_const_for_fn -D clippy::missing_docs_in_private_items -D clippy::mutex_atomic -D clippy::mutex_integer -D clippy::needless_pass_by_value -D clippy::negative_feature_names -D clippy::no_effect_underscore_binding -D clippy::nonstandard_macro_braces -D clippy::path_buf_push_overwrite -D clippy::ptr_as_ptr -D clippy::range_minus_one -D clippy::range_plus_one -D clippy::rc_buffer -D clippy::redundant_closure_for_method_calls -D clippy::redundant_else -D clippy::redundant_feature_names -D clippy::redundant_pub_crate -D clippy::ref_binding_to_reference -D clippy::ref_option_ref -D clippy::rest_pat_in_fully_bound_structs -D clippy::return_self_not_must_use -D clippy::same_functions_in_if_condition -D clippy::suspicious_operation_groupings -D clippy::transmute_ptr_to_ptr -D clippy::undocumented_unsafe_blocks -D clippy::unneeded_field_pattern -D clippy::unnested_or_patterns -D clippy::unreadable_literal -D clippy::useless_let_if_seq -D clippy::verbose_file_reads -D clippy::wildcard_dependencies -D clippy::zero_sized_map_values'
+alias pclippy='cargo clippy --locked --all-targets --all-features -- -D missing_docs -D unused_extern_crates -D warnings -D clippy::complexity -D clippy::correctness -D clippy::pedantic -D clippy::perf -D clippy::style -D clippy::suspicious -D clippy::expect_used -D clippy::indexing_slicing -D clippy::missing_docs_in_private_items -D clippy::panic -D clippy::print_stdout -D clippy::rc_buffer -D clippy::rest_pat_in_fully_bound_structs -D clippy::undocumented_unsafe_blocks -D clippy::unneeded_field_pattern -D clippy::unwrap_used -D clippy::verbose_file_reads -D clippy::negative_feature_names -D clippy::redundant_feature_names -D clippy::wildcard_dependencies -D clippy::missing_const_for_fn -D clippy::mutex_atomic -D clippy::mutex_integer -D clippy::nonstandard_macro_braces -D clippy::path_buf_push_overwrite -D clippy::redundant_pub_crate -D clippy::suspicious_operation_groupings -D clippy::use_self -D clippy::useless_let_if_seq -A clippy::cast_possible_truncation -A clippy::cast_precision_loss -A clippy::cast_sign_loss -A clippy::if_not_else -A clippy::inconsistent_struct_constructor -A clippy::items_after_statements -A clippy::similar_names -A clippy::float_cmp -A clippy::fn_params_excessive_bools -A clippy::missing_errors_doc -A clippy::missing_panics_doc -A clippy::module_name_repetitions -A clippy::struct_excessive_bools -A clippy::too_many_lines'
+alias pfclippy='cargo clippy --locked --target thumbv7em-none-eabihf --all-features -- -D missing_docs -D unused_extern_crates -D warnings -D clippy::complexity -D clippy::correctness -D clippy::pedantic -D clippy::perf -D clippy::style -D clippy::suspicious -D clippy::expect_used -D clippy::indexing_slicing -D clippy::missing_docs_in_private_items -D clippy::panic -D clippy::print_stdout -D clippy::rc_buffer -D clippy::rest_pat_in_fully_bound_structs -D clippy::undocumented_unsafe_blocks -D clippy::unneeded_field_pattern -D clippy::unwrap_used -D clippy::verbose_file_reads -D clippy::negative_feature_names -D clippy::redundant_feature_names -D clippy::wildcard_dependencies -D clippy::missing_const_for_fn -D clippy::mutex_atomic -D clippy::mutex_integer -D clippy::nonstandard_macro_braces -D clippy::path_buf_push_overwrite -D clippy::redundant_pub_crate -D clippy::suspicious_operation_groupings -D clippy::use_self -D clippy::useless_let_if_seq -A clippy::cast_possible_truncation -A clippy::cast_precision_loss -A clippy::cast_sign_loss -A clippy::if_not_else -A clippy::inconsistent_struct_constructor -A clippy::items_after_statements -A clippy::similar_names -A clippy::float_cmp -A clippy::fn_params_excessive_bools -A clippy::missing_errors_doc -A clippy::missing_panics_doc -A clippy::module_name_repetitions -A clippy::struct_excessive_bools -A clippy::too_many_lines'

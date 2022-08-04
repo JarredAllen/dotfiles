@@ -155,7 +155,7 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep.conf"
 
 # Check if a directory exists and isn't already in the path
 _dircheck() {
-    [ -d "$1" ] && [[ ! "$PATH" == *"$1"* ]]
+    [ -d "$1" ] && [[ ! "$PATH" == '*'"$1"'*' ]]
 }
 _idempotent_path_add() {
     if _dircheck "$1"; then
