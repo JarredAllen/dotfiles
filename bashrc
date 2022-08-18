@@ -191,7 +191,8 @@ _idempotent_path_add "/opt/julia/usr/bin" ]
 
 # Add homebrew to the path, if it exists
 if [ -d "/opt/homebrew" ]; then
-    _idempotent_path_add "/opt/homebrew/bin:/opt/homebrew/sbin"
+    _idempotent_path_add "/opt/homebrew/bin"
+    _idempotent_path_add "/opt/homebrew/sbin"
     # If we have LLVM installed through homebrew, put it in front
     export PATH="/opt/homebrew/opt/llvm/bin/:$PATH"
 fi
