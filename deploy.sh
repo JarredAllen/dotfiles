@@ -4,7 +4,7 @@ set -euo pipefail
 # The dotfiles directly in my home to copy out
 HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
 # Directories in my home's .config directory
-HOME_CONFIG_ENTRIES="git ripgrep.conf"
+HOME_CONFIG_ENTRIES="git ripgrep.conf i3"
 HOME_VIM_DIRS="after"
 CARGO_BINARIES=(bat cargo-outdated cargo-tree cargo-udeps difftastic fd-find ripgrep sd)
 
