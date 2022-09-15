@@ -82,6 +82,7 @@ if command -v cargo; then
     cargo install "${CARGO_BINARIES[@]}"
 else
     echo "Not installing cargo programs because cargo could not be found"
+    echo "Recommend installing cargo by visiting <https://www.rust-lang.org/tools/install>"
 fi
 
 # Set up vim to work as desired
@@ -100,10 +101,23 @@ PluginInstall!
 CocInstall coc-clangd coc-json coc-julia coc-python coc-rust-analyzer
 EOF
 ) 2> /dev/null || true
+
+if command -v npm; then
+    if command -v yarn; then
+        true
+    else
+        echo "Node installed, but yarn not installed"
+        echo "Installing yarn..."
+        sudo npm install --global yarn
+    fi
+else
+    echo "Npm not installed, recommend installing node"
+fi
+
 # Build coc.nvim so it will work
 echo "Building coc.nvim"
 if (which yarn); then
     (cd ~/.vim/bundle/coc.nvim && yarn install)
 else
-    echo "No yarn install found"
+    echo "No yarn install found, not building coc.nvim"
 fi
