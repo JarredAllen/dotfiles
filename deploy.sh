@@ -78,8 +78,7 @@ bash <(while IFS=$'\n' read -r option; do echo "git config --file \"$TARGET/.git
 # If cargo is present, update all files installed through it
 # And then install the ones that I like to use
 if command -v cargo; then
-    cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ' | xargs cargo install
-    cargo install "${CARGO_BINARIES[@]}"
+    cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ' | cat - <(echo "${CARGO_BINARIES[@]}") | xargs cargo install
 else
     echo "Not installing cargo programs because cargo could not be found"
     echo "Recommend installing cargo by visiting <https://www.rust-lang.org/tools/install>"
