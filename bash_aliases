@@ -64,6 +64,11 @@ ips() {
     ifconfig | awk '{ if ($1 == "inet" || $1 == "inet6"){ print $2 }; if (/^[^ \t]/){printf "%s ",$1} }'
 }
 
+# Try connecting to an SSH server on loop
+sshloop() {
+    while true; do ssh $@; sleep 1; done
+}
+
 # Aliases for docker containers used in classes
 alias cs70='docker run -v "$(pwd):/home/student/cs70/" -it harveymudd/cs70-student:fall2019 /bin/zsh'
 alias cs70-update='docker pull harveymudd/cs70-student:fall2019'
