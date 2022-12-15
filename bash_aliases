@@ -66,7 +66,7 @@ ips() {
 
 # Try connecting to an SSH server on loop
 sshloop() {
-    while true; do ssh $@; sleep 1; done
+    while true; do ssh $@; sleep 0.5; done
 }
 
 # Aliases for docker containers used in classes
