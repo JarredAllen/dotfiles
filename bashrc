@@ -208,5 +208,5 @@ _idempotent_path_add "$HOME/.cargo/bin"
 . ~/bin/z.sh
 
 # Print a calendar and cowsay a fortune on opening a terminal
-fortune | cowsay -W50
+fortune 2>&1 | cowsay -W50
 cal
