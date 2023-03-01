@@ -212,7 +212,7 @@ pclippy() {
         -D clippy::mutex_integer -D clippy::nonstandard_macro_braces -D clippy::path_buf_push_overwrite -D clippy::redundant_pub_crate -D clippy::suspicious_operation_groupings -D clippy::use_self \
         -D clippy::useless_let_if_seq -A clippy::cast_possible_truncation -A clippy::cast_precision_loss -A clippy::cast_sign_loss -A clippy::if_not_else -A clippy::inconsistent_struct_constructor \
         -A clippy::items_after_statements -A clippy::similar_names -A clippy::float_cmp -A clippy::fn_params_excessive_bools -A clippy::missing_errors_doc -A clippy::missing_panics_doc \
-        -A clippy::module_name_repetitions -A clippy::struct_excessive_bools -A clippy::too_many_lines -A clippy::result_large_err
+        -A clippy::module_name_repetitions -A clippy::struct_excessive_bools -A clippy::too_many_lines -A clippy::result_large_err -A clippy::match_bool
 }
 pfclippy() {
     cargo clippy --target thumbv7em-none-eabihf --all-features $1 -- \
@@ -223,5 +223,6 @@ pfclippy() {
         -D clippy::mutex_integer -D clippy::nonstandard_macro_braces -D clippy::path_buf_push_overwrite -D clippy::redundant_pub_crate -D clippy::suspicious_operation_groupings \
         -D clippy::use_self -D clippy::useless_let_if_seq -A clippy::cast_possible_truncation -A clippy::cast_precision_loss -A clippy::cast_sign_loss -A clippy::if_not_else \
         -A clippy::inconsistent_struct_constructor -A clippy::items_after_statements -A clippy::similar_names -A clippy::float_cmp -A clippy::fn_params_excessive_bools \
-        -A clippy::missing_errors_doc -A clippy::missing_panics_doc -A clippy::module_name_repetitions -A clippy::struct_excessive_bools -A clippy::too_many_lines -A clippy::result_large_err
+        -A clippy::missing_errors_doc -A clippy::missing_panics_doc -A clippy::module_name_repetitions -A clippy::struct_excessive_bools -A clippy::too_many_lines -A clippy::result_large_err \
+        -A clippy::match_bool
 }
