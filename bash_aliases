@@ -69,14 +69,6 @@ sshloop() {
     while true; do ssh $@; sleep 0.5; done
 }
 
-# Aliases for docker containers used in classes
-alias cs70='docker run -v "$(pwd):/home/student/cs70/" -it harveymudd/cs70-student:fall2019 /bin/zsh'
-alias cs70-update='docker pull harveymudd/cs70-student:fall2019'
-alias pls='docker run -v "$(pwd):/root/lab" -v "/home/jarred/.vimrc:/root/.vimrc" -v "/home/jarred/.vim:/root/.vim" -it harveymudd/cs131 /bin/zsh'
-alias pls-update='docker pull harveymudd/cs131'
-alias cs132='docker run -v "$(pwd):/root/lab" -v "/home/jarred/.vimrc:/root/.vimrc" -v "/home/jarred/.vim:/root/.vim" -v "/usr/local/bin/node:/usr/bin/node" -it harveymudd/cs132:2 /bin/zsh'
-alias cs132-update='docker pull harveymudd/cs132:2'
-
 # A utility for making and moving to shortcuts in the terminal
 sc() {
     if [ "$1" == "-p" ]; then
@@ -172,9 +164,6 @@ _junit_completion() {
 }
 complete -F _junit_completion junit
 
-# Go back to the previous directory (only tested on bash)
-alias back="cd ~-/"
-
 # Go to root of the current repository
 repo-root() {
     REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
@@ -183,23 +172,6 @@ repo-root() {
     else
         echo "Error: not in a repository"
     fi
-}
-
-# Open a math pset by making it in pdflatex, opening the pdf in evince, then opening the tex file in vim
-mpset() {
-    if [ -z "$1" ]; then
-        echo "No file specified"
-        return 1
-    fi
-    if [ ! -f "$1.tex" ]; then
-        echo "Can't find file: \"$1.tex\""
-        return 1
-    fi
-    pdflatex "$1.tex"
-    evince "$1.pdf" &> /dev/null &
-    PDF_VIEWER_PID=$!
-    vim "$1.tex"
-    kill "$PDF_VIEWER_PID"
 }
 
 # Loop a command until it fails, showing the count
