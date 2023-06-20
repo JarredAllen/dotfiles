@@ -202,6 +202,16 @@ mpset() {
     kill "$PDF_VIEWER_PID"
 }
 
+# Loop a command until it fails, showing the count
+test_loop() {
+    COUNT=0
+    while "$@"; do
+        COUNT=$(( COUNT + 1 ))
+        echo -e "\n$COUNT successes\n"
+    done
+    echo -e "\nFailure after $COUNT successes"
+}
+
 # Run clippy with extra denies
 pclippy() {
     cargo clippy --all-targets --all-features $1 -- \
