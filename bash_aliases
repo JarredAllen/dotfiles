@@ -85,7 +85,7 @@ lcname() {
 
 # Run junit more easily (this is the location junit is installed on my laptop, may be different elsewhere)
 junit() {
-    java -cp ".:/usr/share/java/junit-3.8.2.jar" junit.textui.TestRunner "$1"
+    java -cp ".:/usr/share/java/junit-4.13.2.jar" junit.textui.TestRunner "$1"
 }
 _junit_completion() {
     mapfile -t COMPREPLY< <(ls . | grep "^${COMP_WORDS[COMP_CWORD]}" | grep "[.]class$")
