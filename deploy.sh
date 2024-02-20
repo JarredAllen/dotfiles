@@ -7,6 +7,20 @@ HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
 HOME_CONFIG_ENTRIES="git ripgrep.conf i3"
 HOME_VIM_DIRS="after"
 CARGO_BINARIES=(bat cargo-outdated cargo-tree cargo-udeps difftastic fd-find ripgrep sd taplo-cli)
+# Git configuration: one entry per line
+GIT_CONFIG=(
+    'pull.ff only'
+    'push.autoSetupRemote true'
+    'user.name "Jarred Allen"'
+    'core.excludesfile ~/.config/git/ignore'
+    'diff.external difft'
+    'fetch.prune true'
+    'rerere.enabled true'
+    'rerere.autoUpdate true'
+    'branch.sort -committerdate'
+    'column.ui auto'
+    'core.fsmonitor true'
+)
 
 Usage() {
     echo 'Usage:'
@@ -71,9 +85,9 @@ cp $CP_ARGS -R "$HERE/bin" "$HOME"
 curl https://raw.githubusercontent.com/rupa/z/master/z.sh > "$HOME/bin/z.sh"
 
 # Set some global git configuration variables
-# TODO Figure out how to arrange these variables in a more easily readable/editable manner
-GIT_CONFIG=$'pull.ff only\npush.autoSetupRemote true\nuser.name "Jarred Allen"\ncore.excludesfile ~/.config/git/ignore\ndiff.external difft\nfetch.prune true\nrerere.enabled true\nrerere.autoUpdate true\nbranch.sort -committerdate\ncolumn.ui auto\ncore.fsmonitor true'
-bash <(while IFS=$'\n' read -r option; do echo "git config --file \"$TARGET/.gitconfig\" --replace-all $option"; done <<< "$GIT_CONFIG")
+for config in "${GIT_CONFIG[@]}"; do
+    git config --file "$TARGET/.gitconfig" --replace-all $config
+done
 
 # If cargo is present, update all files installed through it
 # And then install the ones that I like to use
