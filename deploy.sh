@@ -72,7 +72,7 @@ curl https://raw.githubusercontent.com/rupa/z/master/z.sh > "$HOME/bin/z.sh"
 
 # Set some global git configuration variables
 # TODO Figure out how to arrange these variables in a more easily readable/editable manner
-GIT_CONFIG=$'pull.ff only\npush.autoSetupRemote true\nuser.name "Jarred Allen"\ncore.excludesfile ~/.config/git/ignore\ndiff.external difft\nfetch.prune true'
+GIT_CONFIG=$'pull.ff only\npush.autoSetupRemote true\nuser.name "Jarred Allen"\ncore.excludesfile ~/.config/git/ignore\ndiff.external difft\nfetch.prune true\nrerere.enabled true\nrerere.autoUpdate true\nbranch.sort -committerdate\ncolumn.ui auto\ncore.fsmonitor true'
 bash <(while IFS=$'\n' read -r option; do echo "git config --file \"$TARGET/.gitconfig\" --replace-all $option"; done <<< "$GIT_CONFIG")
 
 # If cargo is present, update all files installed through it
