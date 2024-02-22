@@ -32,7 +32,11 @@ Plugin 'tpope/vim-repeat'
 Plugin 'lervag/vimtex'
 
 " Vim Autoformat (automatically format files properly on write)
-Plugin 'Chiel92/vim-autoformat'
+" Use `taplo` to format `.toml` files.
+let g:formatdef_taplo = '"taplo fmt -"'
+let g:formatters_toml = ['taplo']
+" Load the plugin
+Plugin 'vim-autoformat/vim-autoformat'
 
 " JuliaEditorSupport plugin (do nice things with Julia)
 Plugin 'JuliaEditorSupport/julia-vim'
