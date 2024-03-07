@@ -311,3 +311,37 @@ nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 highlight SignColumn ctermbg=NONE
 highlight GitGutterAdd ctermfg=green ctermbg=NONE
 highlight GitGutterChange ctermfg=magenta ctermbg=NONE
+
+" Annotate lines missing code coverage in the left column.
+" The sign to place on lines missing coverage
+sign define SadLine text=☹ texthl=QuickFixLine
+
+" takes a comma-separated list of line numbers and the name of a defined `:sign`
+" and places the sign on each line.
+function! PlaceSignOnLines(line_numbers, sign)
+    " Split the comma-separated list of line numbers
+    let lines = split(a:line_numbers, ',')
+
+    " Loop through each line number
+    for line_number in lines
+        " Trim leading/trailing spaces and convert to number
+        let line_number = str2nr(trim(line_number))
+
+        " Place the sign on the line
+        execute 'sign place ' . line_number . ' line=' . line_number . ' name=' . a:sign
+    endfor
+endfunction
+
+function! MarkCoverage()
+    sign unplace *
+    let command = "cargo llvm-cov report --show-missing-lines | grep "
+                \ .. expand('%:p')
+                \ .. " | cut -d ':' -f 2 | tr -d ' '"
+    let lines = system(command)
+    exe PlaceSignOnLines(lines, "SadLine")
+endfunction
+
+function! DoCoverage()
+    ! cargo llvm-cov --all-targets --all-features
+    exe MarkCoverage()
+endfunction
