@@ -15,6 +15,7 @@ GIT_CONFIG=(
     'core.excludesfile ~/.config/git/ignore'
     'diff.external difft'
     'fetch.prune true'
+    'rebase.updateRefs true'
     'rerere.enabled true'
     'rerere.autoUpdate true'
     'branch.sort -committerdate'
