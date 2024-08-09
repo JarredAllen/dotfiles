@@ -55,6 +55,12 @@ Plugin 'tpope/vim-fugitive'
 " Diffs in the sidebar
 Plugin 'airblade/vim-gitgutter'
 
+" Debugger integrated into Vim
+Plugin 'puremourning/vimspector'
+
+" Markdown preview integrated into Vim
+Plugin 'iamcco/markdown-preview.nvim'
+
 " Finishing up Vundle
 call vundle#end()
 
@@ -235,6 +241,19 @@ set wildmenu
 set cmdheight=2
 " Shows the last command in the bottom of the screen
 set showcmd
+
+
+" Settings for MarkdownPreview
+" don't close the window if I switch to a different buffer.
+let g:mkdp_auto_close = 0
+" only refresh when the buffer is written/vim exits insert mode.
+let g:mkdp_refresh_slow = 1
+" set browser for previewing
+let g:mkdp_browser = 'firefox'
+" set the webpage title for the preview
+let g:mkdp_page_title = '${name} - MarkdownPreview'
+" reuse an old preview tab when previewing a new buffer
+let g:mkdp_combine_preview = 1
 
 
 " When searching, ignore case unless the search text contains upper-case
