@@ -123,10 +123,10 @@ pclippy() {
         -D clippy::rest_pat_in_fully_bound_structs -D clippy::undocumented_unsafe_blocks -D clippy::unneeded_field_pattern -D clippy::unwrap_used -D clippy::verbose_file_reads \
         -D clippy::negative_feature_names -D clippy::redundant_feature_names -D clippy::wildcard_dependencies -D clippy::iter_with_drain -D clippy::missing_const_for_fn -D clippy::mutex_atomic \
         -D clippy::mutex_integer -D clippy::nonstandard_macro_braces -D clippy::path_buf_push_overwrite -D clippy::redundant_pub_crate -D clippy::suspicious_operation_groupings -D clippy::use_self \
-        -D clippy::useless_let_if_seq -A clippy::cast_possible_truncation -A clippy::cast_precision_loss -A clippy::cast_sign_loss -A clippy::if_not_else -A clippy::inconsistent_struct_constructor \
-        -A clippy::items_after_statements -A clippy::similar_names -A clippy::float_cmp -A clippy::fn_params_excessive_bools -A clippy::missing_errors_doc -A clippy::missing_panics_doc \
-        -A clippy::module_name_repetitions -A clippy::struct_excessive_bools -A clippy::too_many_lines -A clippy::result_large_err -A clippy::match_bool -A clippy::struct_field_names \
-        -A async_fn_in_trait $2
+        -D clippy::useless_let_if_seq -D clippy::allow_attributes_without_reason -A clippy::cast_possible_truncation -A clippy::cast_precision_loss -A clippy::cast_sign_loss -A clippy::if_not_else \
+        -A clippy::inconsistent_struct_constructor -A clippy::items_after_statements -A clippy::similar_names -A clippy::float_cmp -A clippy::fn_params_excessive_bools -A clippy::missing_errors_doc \
+        -A clippy::missing_panics_doc -A clippy::module_name_repetitions -A clippy::struct_excessive_bools -A clippy::too_many_lines -A clippy::result_large_err -A clippy::match_bool \
+        -A clippy::struct_field_names -A async_fn_in_trait $2
 }
 pfclippy() {
     cargo clippy --target thumbv7em-none-eabihf --all-features $1 -- \
@@ -135,8 +135,8 @@ pfclippy() {
         -D clippy::rest_pat_in_fully_bound_structs -D clippy::undocumented_unsafe_blocks -D clippy::unneeded_field_pattern -D clippy::unwrap_used -D clippy::verbose_file_reads \
         -D clippy::negative_feature_names -D clippy::redundant_feature_names -D clippy::wildcard_dependencies -D clippy::iter_with_drain -D clippy::missing_const_for_fn -D clippy::mutex_atomic \
         -D clippy::mutex_integer -D clippy::nonstandard_macro_braces -D clippy::path_buf_push_overwrite -D clippy::redundant_pub_crate -D clippy::suspicious_operation_groupings \
-        -D clippy::use_self -D clippy::useless_let_if_seq -A clippy::cast_possible_truncation -A clippy::cast_precision_loss -A clippy::cast_sign_loss -A clippy::if_not_else \
-        -A clippy::inconsistent_struct_constructor -A clippy::items_after_statements -A clippy::similar_names -A clippy::float_cmp -A clippy::fn_params_excessive_bools \
+        -D clippy::use_self -D clippy::useless_let_if_seq -D clippy::allow_attributes_without_reason -A clippy::cast_possible_truncation -A clippy::cast_precision_loss -A clippy::cast_sign_loss \
+        -A clippy::if_not_else -A clippy::inconsistent_struct_constructor -A clippy::items_after_statements -A clippy::similar_names -A clippy::float_cmp -A clippy::fn_params_excessive_bools \
         -A clippy::missing_errors_doc -A clippy::missing_panics_doc -A clippy::module_name_repetitions -A clippy::struct_excessive_bools -A clippy::too_many_lines -A clippy::result_large_err \
         -A clippy::match_bool -A clippy::struct_field_names -A async_fn_in_trait $2
 }
