@@ -9,18 +9,19 @@ HOME_VIM_DIRS="after"
 CARGO_BINARIES=(bat cargo-outdated cargo-tree cargo-udeps difftastic fd-find ripgrep sd taplo-cli)
 # Git configuration: one entry per line
 GIT_CONFIG=(
-    'pull.ff only'
-    'push.autoSetupRemote true'
-    'user.name "Jarred Allen"'
-    'core.excludesfile ~/.config/git/ignore'
-    'diff.external difft'
-    'fetch.prune true'
-    'rebase.updateRefs true'
-    'rerere.enabled true'
-    'rerere.autoUpdate true'
     'branch.sort -committerdate'
     'column.ui auto'
+    'core.excludesfile ~/.config/git/ignore'
     'core.fsmonitor true'
+    'diff.external difft'
+    'fetch.prune true'
+    'help.autocorrect prompt'
+    'pull.ff only'
+    'push.autoSetupRemote true'
+    'rebase.updateRefs true'
+    'rerere.autoUpdate true'
+    'rerere.enabled true'
+    'user.name "Jarred Allen"'
 )
 
 Usage() {
