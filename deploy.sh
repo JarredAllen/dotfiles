@@ -86,6 +86,11 @@ cp $CP_ARGS -R "$HERE/bin" "$HOME"
 # Install z
 curl https://raw.githubusercontent.com/rupa/z/master/z.sh > "$HOME/bin/z.sh"
 
+# Create an empty local tmux config if none exists, so tmux doesn't make warnings.
+if [ -n -e ~/.config/tmux.local.conf ]; then
+    touch ~/.config/tmux.local.conf
+fi
+
 # Set some global git configuration variables
 for config in "${GIT_CONFIG[@]}"; do
     git config --file "$TARGET/.gitconfig" --replace-all $config
