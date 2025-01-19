@@ -16,6 +16,7 @@ GIT_CONFIG=(
     'diff.external difft'
     'fetch.prune true'
     'help.autocorrect prompt'
+    'init.defaultBranch main'
     'pull.ff only'
     'push.autoSetupRemote true'
     'rebase.updateRefs true'
