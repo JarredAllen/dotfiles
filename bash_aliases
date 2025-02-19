@@ -59,6 +59,32 @@ mkcd() {
     mkdir -p "$1" && cd "$1";
 }
 
+# Make a temporary work directory in `/var/tmp`.
+#
+# If given, $1 is a base name (will be "/var/tmp/$1.XXXXXX", default 'workdir').
+# The remaining arguments are a command to run in the working directory.
+temp_workdir() {
+    if [ -n "${1:+x}" ]; then
+        local -r dirname="$1"
+        shift
+    else
+        local -r dirname="workdir"
+    fi
+    local -r workdir=$(mktemp --directory "/var/tmp/$dirname.XXXXXX")
+    (cd "$workdir"; if [ -n "${2:+x}" ]; then "$@" ; fi ; bash)
+    if [ -n "$(findmnt | grep "$workdir")" ]; then
+        echo "Not cleaning up $workdir because mount detected"
+        return
+    fi
+    echo "Cleaning up temporary working directory $workdir"
+    rm -rf "$workdir"
+}
+
+temp_crate() {
+    local -r cratename="${1:-test-crate}"
+    temp_workdir "$cratename" cargo init --name "$cratename" .
+}
+
 # List the network interfaces and ips (TODO looks ugly if interfaces don't all have ip addresses)
 ips() {
     ifconfig | awk '{ if ($1 == "inet" || $1 == "inet6"){ print $2 }; if (/^[^ \t]/){printf "%s ",$1} }'
