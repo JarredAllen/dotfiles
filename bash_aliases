@@ -85,6 +85,16 @@ temp_crate() {
     temp_workdir "$cratename" cargo init --name "$cratename" .
 }
 
+temp_unzip() {
+    if [ -n "${1:+x}" ] || [ ! -f "$1" ]; then
+        echo '$1 must be path to a file to unzip'
+        return 1
+    fi
+    local -r zip_path="$(realpath $1)"
+    local -r workdir="${1:-temp-unzip}"
+    temp_workdir "$workdir" unzip "$zip_path"
+}
+
 # List the network interfaces and ips (TODO looks ugly if interfaces don't all have ip addresses)
 ips() {
     ifconfig | awk '{ if ($1 == "inet" || $1 == "inet6"){ print $2 }; if (/^[^ \t]/){printf "%s ",$1} }'
