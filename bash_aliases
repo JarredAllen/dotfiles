@@ -86,12 +86,12 @@ temp_crate() {
 }
 
 temp_unzip() {
-    if [ -n "${1:+x}" ] || [ ! -f "$1" ]; then
+    if [ -z "${1:+x}" ] || [ ! -f "$1" ]; then
         echo '$1 must be path to a file to unzip'
         return 1
     fi
     local -r zip_path="$(realpath $1)"
-    local -r workdir="${1:-temp-unzip}"
+    local -r workdir="${2:-temp-unzip}"
     temp_workdir "$workdir" unzip "$zip_path"
 }
 
