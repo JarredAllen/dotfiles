@@ -64,9 +64,9 @@ fi
 # I like this prompt because command begins at a consistent location regardless
 # of path length and short commands are never broken across lines
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n[\#] \[\033[01;32m\]\A\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]${PROMPT_LABEL:+\[\033[01;35m\]($PROMPT_LABEL)\[\033[00m\]}:\[\033[01;34m\]\w\[\033[00m\]\n[\#] \[\033[01;32m\]\A\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n[\#]\A\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h${PROMPT_LABEL:+($PROMPT_LABEL)}:\w\n[\#]\A\$ '
 fi
 unset color_prompt force_color_prompt
 

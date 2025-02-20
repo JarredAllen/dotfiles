@@ -71,7 +71,7 @@ temp_workdir() {
         local -r dirname="workdir"
     fi
     local -r workdir=$(mktemp --directory "/var/tmp/$dirname.XXXXXX")
-    (cd "$workdir"; if [ -n "${2:+x}" ]; then "$@" ; fi ; bash)
+    (cd "$workdir"; if [ -n "${2:+x}" ]; then "$@" ; fi ; PROMPT_LABEL="tempdir $dirname" bash -i)
     if [ -n "$(findmnt | grep "$workdir")" ]; then
         echo "Not cleaning up $workdir because mount detected"
         return
