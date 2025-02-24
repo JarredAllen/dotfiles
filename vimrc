@@ -3,7 +3,7 @@
 " Written by: Jarred Allen
 
 " I like this color scheme
-colorscheme slate
+colorscheme sorbet
 
 " Disable some VI-compatibility features
 set nocompatible
