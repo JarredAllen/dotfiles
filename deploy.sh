@@ -11,17 +11,27 @@ CARGO_BINARIES=(bat cargo-outdated cargo-tree cargo-udeps difftastic fd-find rip
 GIT_CONFIG=(
     'branch.sort -committerdate'
     'column.ui auto'
+    'commit.verbase true'
     'core.excludesfile ~/.config/git/ignore'
     'core.fsmonitor true'
+    # External diff will override diff settings usually, but sometimes it still uses the built-in diff
+    'diff.algorithm histogram'
     'diff.external difft'
+    'diff.mnemonicPrefix true'
+    'diff.renames true'
+    'fetch.all true'
     'fetch.prune true'
     'help.autocorrect prompt'
     'init.defaultBranch main'
+    'merge.conflictStyle zdiff3'
     'pull.ff only'
     'push.autoSetupRemote true'
+    'push.followTags true'
     'rebase.updateRefs true'
+    'rerere.autoSquash true'
     'rerere.autoUpdate true'
     'rerere.enabled true'
+    'tag.sort version:refname'
     'user.name "Jarred Allen"'
 )
 
