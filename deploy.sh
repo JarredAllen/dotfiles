@@ -6,7 +6,7 @@ HOME_DOTFILES="bash_aliases bashrc gitconfig tmux.conf vimrc"
 # Directories in my home's .config directory
 HOME_CONFIG_ENTRIES="git ripgrep.conf i3"
 HOME_VIM_DIRS="after"
-CARGO_BINARIES=(bat cargo-outdated cargo-tree cargo-udeps difftastic fd-find ripgrep sd taplo-cli)
+CARGO_BINARIES=(bat cargo-outdated cargo-tree cargo-udeps difftastic fd-find mergiraf ripgrep sd taplo-cli)
 
 Usage() {
     echo 'Usage:'

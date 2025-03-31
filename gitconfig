@@ -5,6 +5,7 @@
 [commit]
 	verbase = true
 [core]
+    attributesfile = ~/.config/git/attributes
 	excludesfile = ~/.config/git/ignore
 	fsmonitor = true
 [diff]
@@ -21,6 +22,9 @@
 	defaultBranch = main
 [merge]
 	conflictStyle = zdiff3
+[merge "mergiraf"]
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
 [pull]
 	ff = only
 [push]
