@@ -2,38 +2,11 @@
 set -euo pipefail
 
 # The dotfiles directly in my home to copy out
-HOME_DOTFILES="bash_aliases bashrc tmux.conf vimrc"
+HOME_DOTFILES="bash_aliases bashrc gitconfig tmux.conf vimrc"
 # Directories in my home's .config directory
 HOME_CONFIG_ENTRIES="git ripgrep.conf i3"
 HOME_VIM_DIRS="after"
 CARGO_BINARIES=(bat cargo-outdated cargo-tree cargo-udeps difftastic fd-find ripgrep sd taplo-cli)
-# Git configuration: one entry per line
-GIT_CONFIG=(
-    'branch.sort -committerdate'
-    'column.ui auto'
-    'commit.verbase true'
-    'core.excludesfile ~/.config/git/ignore'
-    'core.fsmonitor true'
-    # External diff will override diff settings usually, but sometimes it still uses the built-in diff
-    'diff.algorithm histogram'
-    'diff.external difft'
-    'diff.mnemonicPrefix true'
-    'diff.renames true'
-    'fetch.all true'
-    'fetch.prune true'
-    'help.autocorrect prompt'
-    'init.defaultBranch main'
-    'merge.conflictStyle zdiff3'
-    'pull.ff only'
-    'push.autoSetupRemote true'
-    'push.followTags true'
-    'rebase.updateRefs true'
-    'rerere.autoSquash true'
-    'rerere.autoUpdate true'
-    'rerere.enabled true'
-    'tag.sort version:refname'
-    'user.name "Jarred Allen"'
-)
 
 Usage() {
     echo 'Usage:'
@@ -101,11 +74,6 @@ curl https://raw.githubusercontent.com/rupa/z/master/z.sh > "$HOME/bin/z.sh"
 if [ -n -e ~/.config/tmux.local.conf ]; then
     touch ~/.config/tmux.local.conf
 fi
-
-# Set some global git configuration variables
-for config in "${GIT_CONFIG[@]}"; do
-    git config --file "$TARGET/.gitconfig" --replace-all $config
-done
 
 # If cargo is present, update all files installed through it
 # And then install the ones that I like to use

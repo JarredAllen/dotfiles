@@ -1,0 +1,38 @@
+[branch]
+	sort = -committerdate
+[column]
+	ui = auto
+[commit]
+	verbase = true
+[core]
+	excludesfile = ~/.config/git/ignore
+	fsmonitor = true
+[diff]
+	algorithm = histogram
+	external = difft
+	mnemonicPrefix = true
+	renames = true
+[fetch]
+	prune = true
+	all = true
+[help]
+	autocorrect = prompt
+[init]
+	defaultBranch = main
+[merge]
+	conflictStyle = zdiff3
+[pull]
+	ff = only
+[push]
+	autoSetupRemote = true
+	followTags = true
+[rebase]
+	updateRefs = true
+[rerere]
+	autoSquash = true
+	autoUpdate = true
+	enabled = true
+[tag]
+	sort = version:refname
+[user]
+	name = Jarred Allen
