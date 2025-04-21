@@ -95,6 +95,16 @@ temp_unzip() {
     temp_workdir "$workdir" unzip "$zip_path"
 }
 
+temp_untar() {
+    if [ -z "${1:+x}" ] || [ ! -f "$1" ]; then
+        echo '$1 must be path to a file to unzip'
+        return 1
+    fi
+    local -r tar_path="$(realpath $1)"
+    local -r workdir="${2:-temp-untar}"
+    temp_workdir "$workdir" tar -xf "$tar_path"
+}
+
 # List the network interfaces and ips (TODO looks ugly if interfaces don't all have ip addresses)
 ips() {
     ifconfig | awk '{ if ($1 == "inet" || $1 == "inet6"){ print $2 }; if (/^[^ \t]/){printf "%s ",$1} }'
