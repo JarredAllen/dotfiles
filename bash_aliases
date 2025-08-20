@@ -105,6 +105,16 @@ temp_untar() {
     temp_workdir "$workdir" tar -xf "$tar_path"
 }
 
+temp_repo() {
+    if [ -z "${1:+x}" ]; then
+        echo '$1 must be a git repo to check out'
+        return 1
+    fi
+    local -r repo_path="$1"
+    local -r repo_name="$(basename --suffix=.git $repo_path)"
+    temp_workdir "$repo_name" git clone "$repo_path" .
+}
+
 # List the network interfaces and ips (TODO looks ugly if interfaces don't all have ip addresses)
 ips() {
     ifconfig | awk '{ if ($1 == "inet" || $1 == "inet6"){ print $2 }; if (/^[^ \t]/){printf "%s ",$1} }'
