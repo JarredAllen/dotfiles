@@ -209,4 +209,8 @@ _idempotent_path_add "$HOME/.cargo/bin"
 
 # Print a calendar and cowsay a fortune on opening a terminal
 fortune 2>&1 | cowsay -W50
+echo
+echo
+date "+%l:%M%p on %A, %B %e, %Y"
+echo
 cal

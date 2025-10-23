@@ -170,3 +170,31 @@ test_loop() {
     done
     echo -e "\nFailure after $COUNT successes"
 }
+
+# Block the system from sleeping for an interval of time
+nosleep() {
+    if [ -z "$1" ]; then
+        systemd-inhibit --who=nosleep --why="Requested no sleep indefinitely" sleep 9999d &>/dev/null
+    else
+        local -r DURATION="$1"
+        systemd-inhibit --who=nosleep --why="Requested no sleep for $DURATION" sleep "$DURATION"
+    fi
+}
+
+timer() {
+    if [ -z "$1" ]; then
+        echo "Must specify timer duration"
+        return 1
+    fi
+    local -r DURATION="$1"
+    shift
+    local -a ARGS
+    if [ -z "$1" ]; then
+        ARGS=( "$DURATION timer" )
+    else
+        ARGS=( "$@" )
+    fi
+    declare -ra ARGS
+    sleep "$DURATION"
+    notify-send "Timer elapsed!" "${ARGS[*]}"
+}
