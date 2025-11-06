@@ -181,6 +181,12 @@ if [ -d "/opt/devkitpro" ]; then
     export PATH="$DEVKITARM/bin:$DEVKITPRO/tools/bin:$PATH"
 fi
 
+# Add nvm to the path, if it exists
+if [ -d "$HOME/.nvm" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+fi
+
 # Add Julia tools to the path if it's installed in /opt/julia
 _idempotent_path_add "/opt/julia/usr/bin" ]
 
