@@ -169,11 +169,6 @@ if [ -d "$HOME/gems" ]; then
     export PATH="$HOME/gems/bin:$PATH"
 fi
 
-# Add yarn to the path if it exists
-if [ -d "$HOME/.yarn" ]; then
-    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-fi
-
 # Source ghcup-env if installed
 if [ -f "$HOME/.ghcup/env" ]; then
     source "$HOME/.ghcup/env"
