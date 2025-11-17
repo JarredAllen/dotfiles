@@ -71,7 +71,7 @@ cp $CP_ARGS -R "$HERE/bin" "$HOME"
 curl https://raw.githubusercontent.com/rupa/z/master/z.sh > "$HOME/bin/z.sh"
 
 # Create an empty local tmux config if none exists, so tmux doesn't make warnings.
-if [ -n -e ~/.config/tmux.local.conf ]; then
+if ! [ -e ~/.config/tmux.local.conf ]; then
     touch ~/.config/tmux.local.conf
 fi
 
