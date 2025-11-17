@@ -71,7 +71,14 @@ temp_workdir() {
         local -r dirname="workdir"
     fi
     local -r workdir=$(mktemp --directory "/var/tmp/$dirname.XXXXXX")
-    (cd "$workdir"; if [ -n "${2:+x}" ]; then "$@" ; fi ; PROMPT_LABEL="tempdir $dirname" bash -i)
+    (
+        cd "$workdir";
+        if [ -n "${1:+x}" ]; then
+            "$@" && PROMPT_LABEL="tempdir $dirname" bash -i
+        else
+            PROMPT_LABEL="tempdir $dirname" bash -i
+        fi
+    )
     if [ -n "$(findmnt | grep "$workdir")" ]; then
         echo "Not cleaning up $workdir because mount detected"
         return
@@ -112,7 +119,8 @@ temp_repo() {
     fi
     local -r repo_path="$1"
     local -r repo_name="$(basename --suffix=.git $repo_path)"
-    temp_workdir "$repo_name" git clone "$repo_path" .
+    shift
+    temp_workdir "$repo_name" git clone "$repo_path" . "$@"
 }
 
 # List the network interfaces and ips (TODO looks ugly if interfaces don't all have ip addresses)
