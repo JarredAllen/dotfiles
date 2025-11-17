@@ -84,7 +84,7 @@ temp_workdir() {
         return
     fi
     echo "Cleaning up temporary working directory $workdir"
-    rm -rf "$workdir"
+    rm -rf --one-file-system "$workdir"
 }
 
 temp_crate() {
