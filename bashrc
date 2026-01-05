@@ -107,6 +107,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # Silence deprecation warning on MacOS
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+# Convenience options for `less`
+export LESS='-FiRx4 --use-color'
+
 # Placing aliases in a separate file enables sourcing that separate file to just refresh aliases
 # without doing potentially non-idempotent operations here
 if [ -f ~/.bash_aliases ]; then
