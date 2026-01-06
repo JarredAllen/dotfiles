@@ -107,8 +107,18 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # Silence deprecation warning on MacOS
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-# Convenience options for `less`
+# Convenience options for `less`:
+# * `-F`: Exit automatically if the file fits on the screen.
+# * `-i`: Searching the buffer ignores case if the query is all lower-case.
+# * `-x4`: set tabs to 4 spaces, 
+# * `--use-color`: Enable coloring in the output
 export LESS='-FiRx4 --use-color'
+if command -v bat &> /dev/null; then
+    # Use `bat` to colorize the output, if installed
+    export LESSOPEN='|bat --paging=never --color=always --style=plain %s'
+else
+    echo 'Not colorizing `less` output because `bat` not installed'
+fi
 
 # Placing aliases in a separate file enables sourcing that separate file to just refresh aliases
 # without doing potentially non-idempotent operations here
