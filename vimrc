@@ -32,6 +32,9 @@ Plugin 'tpope/vim-repeat'
 Plugin 'lervag/vimtex'
 
 " Vim Autoformat (automatically format files properly on write)
+" Use `rustfmt` to format `.rs` files, but with the latest edition.
+let g:formatdef_rustfmt = '"rustfmt --edition 2024 --style-edition 2024 --emit stdout"'
+let g:formatters_rs = ['rustfmt']
 " Use `taplo` to format `.toml` files.
 let g:formatdef_taplo = '"taplo fmt -"'
 let g:formatters_toml = ['taplo']
