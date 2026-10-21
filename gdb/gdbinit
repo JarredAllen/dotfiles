@@ -1,0 +1,13 @@
+# Save history persistently between sessions
+set history save on
+set history size 2048
+set history remove-duplicates 2
+set history filename ~/.gdb_history
+
+# Pretty display output
+set print pretty on
+set prompt \033[31mgdb$ \033[0m
+set pagination off
+
+# Load some extra CLI commands implemented in python.
+source ~/.config/gdb/helpers.py
