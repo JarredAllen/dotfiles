@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # The dotfiles directly in my home to copy out
-HOME_DOTFILES="bash_aliases bashrc gitconfig tmux.conf vimrc"
+HOME_DOTFILES="bash_aliases bashrc gitconfig inputrc tmux.conf vimrc"
 # Directories in my home's .config directory
 HOME_CONFIG_ENTRIES="git ripgrep.conf i3 gdb"
 HOME_VIM_DIRS="after"
